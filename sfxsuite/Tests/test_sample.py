@@ -5,6 +5,15 @@ def sample(num1, num2):
     return num1 + num2
 
 
+@pytest.fixture(autouse=True)
+def setup_and_teardown():
+    # setup part
+    print('\nFetching data from db')
+    yield
+    # teardown part
+    print('\nSaving test run data in db')
+
+
 @pytest.mark.parametrize('num1, num2, expected', [(3, 5, 8), (4, 5, 9), (10, 11, 21), (-10, -20, -30)])
 def test_param(num1, num2, expected):
     assert sample(num1, num2) == expected
